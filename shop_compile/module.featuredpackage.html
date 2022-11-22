@@ -1,0 +1,61 @@
+{% if module.display %}
+    <div class="module">
+         <h5>{{ __(module.header) }}</h5>
+
+        <div class="package card position-relative overflow-hidden rounded-0">
+
+            <a href="/package/{{ module.package.id }}" class="bg-white text-center d-block position-relative card-img-top">
+
+                {% if module.package.image.uploaded %}
+                    <img src="{{ module.package.image.url }}" class="img-fluid w-auto mx-auto position-relative bg-white card-img-top toggle-tooltip" title="{{ __("Click for more details") }}" />
+                {% else %}
+                    <div class="d-flex bg-white text-center rounded align-items-center justify-content-center toggle-tooltip" title="{{ __("Click for more details") }}" style="min-height: 236px">
+                        <i class="fa-fw fas fa-image text-primary fa-2x"></i>
+                    </div>
+                {% endif %}
+            </a>
+
+            <div class="card-body bg-primary-800 border-top border-primary-700">
+                <h4 class="mb-2 h4 text-white">{{ module.package.name[:20] }}</h4>
+                <div class="d-flex align-items-center">
+                   {% if module.package.customPrice %}
+                        <div class="d-flex">
+                            <span class="lead text-primary font-weight-bold">{{ __("You decide") }}</span>
+                        </div>
+                    {% elseif module.package.price == 0.00 %}
+                        <div class="d-flex">
+                            <span class="lead text-primary font-weight-bold">{{ __("Free") }}</span>
+                        </div>
+                    {% else %}
+                        {% if module.package.discount.applied %}
+                            <div class="d-flex">
+                                <del class="text-white small mr-3">
+                                    {{ module.package.discount.original|money }} {{ module.package.currency }}
+                                </del>
+                            </div>
+                        {% endif %}
+                        <div class="d-flex">
+                            <span class="lead text-primary-200 font-weight-bold">{{ module.package.price|money }} {{ module.package.currency }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card-footer p-0 border-0">
+                {% if module.package.type == 'both' %}
+                    <a class="btn btn-primary btn-block letter-space-1 rounded-bottom rounded-0" href="/package/{{ module.package.id }}" role="button">
+                        {{__("View") }}
+                    </a>
+                {% else %}
+                    <a class="btn btn-primary btn-block letter-space-1 rounded-bottom rounded-0" href="/checkout/packages/add/{{ module.package.id }}" role="button">
+                        {% if module.package.type == 'subscription' %}
+                            {{__("Subscribe") }}
+                        {% else %}
+                            {{__("Add to Basket") }}
+                        {% endif %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endif %}

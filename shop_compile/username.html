@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <div class="p-4">
+            {% include "contenttopbar.twig" %}
+                    <div class="p-4">
+                            <h1 class="text-3xl font-bold dark:text-gray-50">
+                    {{ __("Enter username") }}</h1>
+        <p class="mt-2 text-gray-300">{{ __("Please enter your username to continue") }}</p>
+        <div class="text-gray-300 mt-1">{{ loginform|raw }}</div></div>
+    </div>
+
+{% endblock %}

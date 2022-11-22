@@ -1,0 +1,67 @@
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="flex w-full my-2">
+                        <div class="col-5 text-left text-gray-300 w-full">
+                {% if basket.packages|length > 0 %}
+                            <div class="position-relative text-gray-300">
+            <a href="/" class="btn p-3 border-right">
+               <i class="fas fa-reply mr-2"></i>{{ __("Continue shopping") }}
+            </a>
+        </div>
+                {% endif %}
+            </div>
+            <div class="col-5 text-right text-gray-300 w-full">
+                {% if basket.packages|length > 0 %}
+                    <span class="badge badge-primary">{{ _p(":count", basket.packages|length, {'count' : basket.packages|length }) }} item{{ basket.packages|length > 1 ? 's' : '' }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="checkout">
+            <div class="packages">
+                <form method="post" action="/checkout/item/update">
+                    {% for package in basket.packages %}
+                        <div class="bg-bgray-overlay rounded-lg p-5 mb-1 block sm:flex w-full text-gray-100 shadow-md">
+                                <div class="col-md-8 mb-3 mb-md-0 w-full">
+                                    <div class="row align-items-center">
+                                        <div class="name col-7">
+                                            <a href="/package/{{ package.id }}" class="font-weight-medium">
+                                                {{ package.name }}
+                                            </a>
+                                            <div class="options small">{% include "package_options.html" %}</div>
+                                            <div class="attribute small">{% if package.ign != "" %}<i class="fas fa-gift"></i>{% endif %}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                                                        <div class="price col-5 w-full my-auto">
+                                            <div class="my-auto">
+                                                {{ package.price|money }} <small>{{ basket.currency }}</small>
+                                            </div>
+                                        </div>
+                                <div class="actions col-md-4 flex sm:mt-0 mt-3">
+                                        <div class="quantity col-5 my-auto mr-2">
+                                            <input class="bg-bgray-secondary border dark:border-gray-700 border-gray-400 text-gray-100 text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full px-4 py-2" type="text" name="quantity[{{ package.item_id }}]" value="{{ package.quantity }}" {% if package.price==0.00 or package.disableQuantity %}disabled="disabled" {% endif %} />
+                                        </div>
+                                        <div class="flex">
+                                            <div class="my-auto">
+                                                <button class="btn btn-secondary btn-sm mr-2 my-auto"><i class="fa fa-fw fa-sync"></i></button>
+                                                </div>
+                                                <div class="my-auto">
+                                                <a href="/checkout/item/remove/{{ package.item_id }}" class="btn-sm btn text-bred-2 text-lg">
+                                                    <i class="fas fa-fw fa-times"></i>
+                                                </a>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer border-top mt-5 text-gray-100 text-2xl">
+        <h4 class="mb-0">{{ __("Total") }} {{ basket.price|money }} <small>{{ basket.currency }}</small></h4>
+    </div>
+</div>
+

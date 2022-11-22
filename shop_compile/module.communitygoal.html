@@ -1,0 +1,25 @@
+<div class="module">
+     <h5>{{ __(module.header) }}</h5>
+    {% if module.communitygoal.image %}
+        <div class="text-center">
+            <img src="{{ module.communitygoal.image }}" style="width:190px; height:165px;" class="img-fluid mx-auto" />
+        </div>
+    {% endif %}
+    <div class="mt-2 text-center mb-0 text-primary-300">{{ module.communitygoal.description|raw }}</div>
+    <div class="progress p-1">
+        <div class='progress-bar {% if module.bar.style == "striped" %} progress-bar-striped {% endif %} {% if module.bar.animated %}progress-bar-striped progress-bar-animated{% endif %}' role="progressbar" style='width:{{ module.percentage }}%;' aria-valuenow='{{ module.percentage }}' aria-valuemax='100'>
+        </div>
+    </div>
+    {% if module.communitygoal.repeatable == 1 %}
+        <hr />
+        <p>{{ __("Times Achieved:") }} {{ module.communitygoal.times_achieved }}</p>
+    {% endif %}
+    <p class="mt-2 text-center mb-0 text-primary-300">
+        {% if module.displayAmount %}
+            <strong>{{ module.total }} / {{ module.target }} {{ store.currency }}</strong> ({{ module.percentage }}%)
+        {% endif %}
+        {% if module.displayAmount == false %}
+            {{ module.percentage }}% {{ __("completed") }}
+        {% endif %}
+    </p>
+</div>

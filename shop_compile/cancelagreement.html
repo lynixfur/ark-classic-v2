@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <section class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8 pr-lg-5 order-lg-2 mb-3 mb-lg-0">
+                <h1 class="mb-4">{{ __("Cancel billing agreement") }}</h1>
+                <p{{ __("Are you sure wish to cancel this subscription?") }}</p>
+                <strong>{{ __("Next Billing Date") }}:</strong> {{ agreement.next_billing_date|date("M d, Y H:i") }} UTC<br />
+                <strong>{{ __("Next Billing Amount") }}:</strong> {{ agreement.next_billing_amount|number_format(2, ".", ",") }} {{ agreement.currency }}
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <a href="/" class="btn btn-link btn-sm text-dark font-weight-bold px-0">{{ __("Cancel") }}</a>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a href="{{ agreement.cancel_url }}" class="btn btn-primary btn-lg">{{ __("I want to cancel the subscription") }}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 sidebar order-lg-1">
+                {% include "sidebarnavigation.twig" %}
+                {{ modules|raw }}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

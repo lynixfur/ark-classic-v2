@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <div class="p-4">
+        <h1 class="mb-3">{{ __("Payment completed") }}</h1>
+        <h3 class="mb-4 h4">{{ __("Your payment was successfully completed") }}</h3>
+        {{ thanks|raw }}
+        {{ delivery|raw }}
+    </div>
+
+{% endblock %}

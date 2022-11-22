@@ -1,0 +1,16 @@
+<div class="module">
+     <h5>{{ __(module.header) }}</h5>
+    <div class="progress p-1">
+        <div class='progress-bar {% if module.bar.style == "striped" %} progress-bar-striped {% endif %} {% if module.bar.animated %}progress-bar-striped progress-bar-animated{% endif %}' role="progressbar" style='width:{{ module.percentage }}%;' aria-valuenow='{{ module.percentage }}' aria-valuemax='100'>
+        </div>
+    </div>
+    <p class="mt-2 text-center mb-0 text-primary-300">
+        {% if module.displayAmount %}
+            <strong>{{ module.total }} / {{ module.target }} {{ store.currency }}</strong> ({{ module.percentage }}%)
+        {% endif %}
+
+        {% if module.displayAmount == false %}
+            {{ module.percentage }}% {{ __("completed") }}
+        {% endif %}
+    </p>
+</div>

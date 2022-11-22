@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="p-4 w-full">
+            {% include "contenttopbar.twig" %}
+            
+            <div class="p-4">
+                        <h1 class="text-3xl font-bold dark:text-gray-50">{{ category.name }}</h1>
+        <div class="text-gray-300 mt-3">
+        {% if category.description != "" %}
+            {{ category.description|raw }}
+        {% endif %}
+        </div>
+        
+        
+        
+        {% if category.packages|length > 0 %}
+            <div class="mt-4 w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-4">
+                    {% for package in category.packages %}
+                        {% include "category/grid-package-item.twig" %}
+                    {% endfor %}
+            </div>
+        {% else %}
+            <div class="card d-flex h-100">
+                <div class="card-body">
+                    {{ __("No packages to display in this category.") }}
+                </div>
+            </div>
+        {% endif %}
+            </div>
+        
+        
+        
+    </div>
+
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="p-4">
+
+    {% include "contenttopbar.twig" %}
+
+    <div class="p-4">
+        <div class="block sm:flex justify-center items-center mb-4">
+
+            <div class="col-12 col-md-6 text-center w-full block sm:flex items-center justify-center">
+                {% if package.image.uploaded %}
+                    <img src="{{ package.image.url }}" class="img-fluid rounded"/>
+                {% else %}
+                    <div class="d-flex bg-white text-center rounded border mb-4 align-items-center justify-content-center" style="min-height: 262px">
+                        <i class="fa-fw fas fa-image text-primary fa-2x"></i>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-12 col-md-6 w-full text-gray-100">
+                <h1 class="mb-3 text-5xl font-bold">{{ package.name[:20] }}</h1>
+
+                <h2 class="h2 mb-4 display-6 font-weight-normal text-3xl">
+                    {% if package.customPrice %}
+                        {{ __("You decide how much to pay.") }}
+                    {% elseif package.price == 0.00 %}
+                        {{ __("This item is free.") }}
+                    {% else %}
+                        {% if package.discount.applied %}
+                            <del class="text-muted small mr-4">
+                                {{ package.discount.original|money }}{{ basket.currency }}
+                            </del>
+                        {% endif %}
+                        <span class="text-primary font-weight-bold">{{ package.price|money }}{{ basket.currency }}</span>
+                    {% endif %}
+                </h2>
+                {% if package.countdownEnds %}<div class="badge badge-danger mb-4">{{ __("Ending Soon") }} - <span class="countdown-to ml-2" data-countdown="{{ package.countdownEnds }}"></span></div>{% endif %}
+            </div>
+        </div>
+
+        <div class="flex space-x-2 {% if package.purchasable==false %} toggle-tooltip{% endif %}"  {% if package.purchasable==false %}title="{{ package.reason }}" {% endif %}>
+            {% if package.basket %}
+                <div class="col-md-6 mb-3 w-full">
+                    <a href="/checkout/item/remove/{{ package.item_id }}" class="w-full inline-flex items-center px-4 py-2 font-bold leading-6 text-md shadow rounded text-gray-100 bg-bred-2 transition ease-in-out duration-150 w-full">{{ __("Remove from basket") }}</a>
+                </div>
+            {% else %}
+                {% if package.type != "single" %}
+                    <div class="col-md-6 mb-3">
+                        <a href="/checkout/packages/add/{{ package.id }}/subscribe" class="btn btn-primary btn-lg btn-block mb-2 mb-lg-0 {% if package.purchasable==false %}disabled{% endif %}"><i class="fas fa-sync-alt mr-3"></i>{{ __("Subscribe") }}</a>
+                    </div>
+                {% endif %}
+                {% if package.type != "subscription" %}
+                    <div class="col-md-6 mb-3 w-full">
+                        <a href="/checkout/packages/add/{{ package.id }}/single" class="inline-flex items-center px-4 py-2 font-bold leading-6 text-md shadow rounded text-gray-100 bg-bred-2 transition ease-in-out duration-150 w-full {% if package.purchasable==false %}disabled{% endif %}" ><i class="fas fa-cart-plus mr-3"></i>{{ __("Add to basket") }}</a>
+                    </div>
+                {% endif %}
+            {% endif %}
+            {% if package.disable_gifting == false and package.storeGiftingEnabled and package.type != "subscription" %}
+                <div class="col-md-6 w-full">
+                    <a href="#" data-toggle="collapse" data-target="#giftFields"
+                       aria-expanded="false" aria-controls="giftFields" class="w-full inline-flex items-center px-4 py-2 font-bold leading-6 text-md shadow rounded text-gray-100 bg-bred-2 transition ease-in-out duration-150">
+                        <span class="mr-2">{{ __("Gift one-off package") }}</span>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if package.disable_gifting == false and package.storeGiftingEnabled and package.type != "subscription" %}
+            <div class="collapse gift-fields" id="giftFields">
+                <div class="text-gray-100 bg-white dark:bg-bgray-secondary shadow rounded-lg mt-3 p-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <form name="gift-form" method="get" action="/checkout/packages/add/{{ package.id }}/single/gift">
+                                        <div class="input-group flex mt-2">
+                                            <input type="text" name="username" placeholder="{{ __("Enter gift recipient's username") }}" class="text-gray-300 dark:bg-bgray-overlay bg-gray-50 border dark:border-gray-700 border-gray-400 sm:text-sm rounded-l-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" value="{{ search }}">
+                                                <button class=" text-white bg-bred-2 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-bold inline-flex items-center justify-center rounded-r-lg text-sm px-3 py-2 text-center"><i class="fas fa-chevron-right px-4"></i></button>
+                                        </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if package.description %}
+            <div class="text-gray-100 bg-white dark:bg-bgray-secondary shadow rounded-lg mt-3 p-5">
+                <h4 class="text-3xl font-bold">{{ __("Package Description") }}</h4><br>
+                {{ package.description|raw }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

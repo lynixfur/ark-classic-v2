@@ -1,0 +1,7 @@
+<div class="notification">
+    {% if page.message.display %}
+        <div class="alert alert-{{ page.message.type}}" role="alert">
+            {{ page.message.text }}
+        </div>
+    {% endif %}
+</div>

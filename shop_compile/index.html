@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+                <div class="bg-white dark:bg-bgray-secondary shadow rounded-lg flex-1 p-10">
+                    <h1 class="text-5xl font-bold dark:text-gray-50 text-center">
+                        Welcome</h1>
+                    <p class="text-2xl mt-1 text-gray-500 dark:text-gray-300 sm:mb-0 mb-5 mt-3 text-center">
+                        Running a server this awesome isn't cheap. All donations go toward server costs (i.e. developing plugins, advertising and hosting fees), as well as keeping the admin-team fed. We hope you understand.  If you have any concernes or questions, feel free to contact us on Discord. 
+<br><br>
+All purchases made 2 weeks before wipe announcement will automatically receive their packages 72 hours after season start and you also will get 20% of the donations as a coupon.
+                    </p>
+                    <div class="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-5">
+                        <a href="https://shop.bloody-ark.com/category/1266875">
+                        <div class="bg-white dark:bg-bgray-overlay shadow rounded-lg relative">
+                            <div class="flex justify-center">
+                                <img class="m-3 w-42" src="https://dunb17ur4ymx4.cloudfront.net/wysiwyg/718778/d19f64ff0bc809bbde516f71d0fd2804cb132e6b.png" alt="d19f64ff0bc809bbde516f71d0fd2804cb132e6b.png">
+                            </div>
+                            <h1 class="text-gray-300 text-3xl text-center font-semibold mt-2 mb-4 pb-4">FREE PACKAGES</h1><br>
+                        </div>
+                        </a>
+                        <a href="https://shop.bloody-ark.com/category/1269176">
+                        <div class="bg-white dark:bg-bgray-overlay shadow rounded-lg relative">
+                            <div class="flex justify-center">
+                                <img class="m-3 w-42" src="https://dunb17ur4ymx4.cloudfront.net/packages/images/847c7639bd64c85bbf364c2da534bcb633738ff1.png" alt="d19f64ff0bc809bbde516f71d0fd2804cb132e6b.png">
+                            </div>
+                            <h1 class="text-gray-300 text-3xl text-center font-semibold mt-2 mb-4 pb-4">POINTS</h1><br>
+                        </div>
+                        </a>
+                        <a href="https://shop.bloody-ark.com/category/1267006">
+                        <div class="bg-white dark:bg-bgray-overlay shadow rounded-lg relative">
+                            <div class="flex justify-center">
+                                <img class="m-3 w-42" src="https://dunb17ur4ymx4.cloudfront.net/packages/images/08552ec41fa07cc9ed6461548c809b07e023160d.png" alt="d19f64ff0bc809bbde516f71d0fd2804cb132e6b.png">
+                            </div>
+                            <h1 class="text-gray-300 text-3xl text-center font-semibold mt-2 mb-4 pb-4">VIP TIERS</h1><br>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+                
+                                        <div class="block sm:hidden">
+                            {{ modules|raw }}
+                        </div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+<div class="module">
+     <h5>{{ __(module.header) }}</h5>
+    {% if module.donor %}
+        <div class="top-donator">
+            <div class="media">
+                <img src="{{ module.skin }}" height="40" class="mr-3">
+                <div class="media-body">
+                    <h5 class="mt-0 mb-0 text-primary-300">{{ module.ign }}</h5>
+                    <div class="text-primary-200">
+                        {% if module.displayAmount %}
+                            {{ __("Donated") }} <strong>{{ module.total|money }}</strong> <small>{{ store.currency }}</small>
+                        {% else %}
+                            {{ __("Donated the most ") }}
+                        {% endif %}
+
+                        {% if module.period == "hourly" %}
+                            {{ __("this hour.") }}
+                        {% elseif module.period == "daily" %}
+                            {{ __("today.") }}
+                        {% elseif module.period == "monthly" %}
+                            {{ __("this month.") }}
+                        {% elseif module.period == "yearly" %}
+                            {{ __("this year.") }}
+                        {% else %}
+                            {{ __("this week.") }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="text-primary-200">
+            {{ __("No recent top donator to display.") }}
+        </div>
+    {% endif %}
+</div>

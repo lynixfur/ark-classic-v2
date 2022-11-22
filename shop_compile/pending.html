@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <div class="p-4">
+        <h1 class="mb-3">{{ __("Awaiting payment confirmation") }}</h1>
+        <p>
+            {{ __("We are waiting for confirmation that your payment has been accepted. You will receive an email as soon as this happens. If you have not heard anything within the next 60 minutes, please contact server staff.") }}
+        </p>
+        <p>
+            {{ __("If you have any issues please contact a member of staff on the server. Please do not contact Mojang or Buycraft. This page is not proof of purchase, please provide the store's support with your transaction ID if there are any issues with the payment.") }}
+        </p>
+    </div>
+    
+{% endblock %}

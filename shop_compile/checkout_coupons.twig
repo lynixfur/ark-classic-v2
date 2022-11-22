@@ -1,0 +1,36 @@
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="text-gray-300 my-2 mb-5 text-2xl">{{ __("Redeem coupons / gift cards") }}</h5>
+    </div>
+    <div class="card-body">
+        <div class="coupons">
+            <div class="redeem">
+                <form method="post" action="/checkout/basketcoupon/add">
+                                <div class="input-group flex mt-2">
+            <input type="text" name="coupon" placeholder="{{ __("Have a coupon code? Enter it here") }}" class="text-gray-300 dark:bg-bgray-overlay bg-gray-50 border dark:border-gray-700 border-gray-400 sm:text-sm rounded-l-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
+                <button class=" text-white bg-bred-2 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-bold inline-flex items-center justify-center rounded-r-lg text-sm px-3 py-2 text-center"><i class="fa fa-arrow-right"></i></button>
+        </div>
+                </form>
+            </div>
+        </div>
+
+        {% if basket.coupons|length > 0 %}
+            <div class="redeemed mt-4">
+                <div class="rounded border p-4 bg-light">
+                        <h6>{{ __("Applied coupons / gift cards") }}</h6>
+                        <table class="table table-hover table-bordered table-light table-responsive">
+                            <tbody>
+                            {% for coupon in basket.coupons %}
+                                <tr>
+                                    <td>{{ coupon.code }}</td>
+                                    <td>{{ coupon.description }}</td>
+                                    <td><a href="/checkout/basketcoupon/remove/{{ coupon.basket_id ?: coupon.code }}"><i class="fas fa-times text-danger"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>

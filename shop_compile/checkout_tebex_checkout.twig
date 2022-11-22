@@ -1,0 +1,13 @@
+<div class="py-5 px-4 rounded-0 text-center">
+    <h2 class="mb-3 hidden">{{ __("Proceed to checkout") }}</h2>
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <form method="post" action="{% if basket.price > 0 %}/checkout/pay{% else %}/checkout/free{% endif %}" {% if basket.price > 0 %}class="gateway"{% endif %}>
+                <button type="submit" class="inline-flex items-center px-3 py-1 font-bold leading-6 text-md shadow rounded text-gray-100 bg-bred-2 transition ease-in-out duration-150" id="purchase-button" data-loading-text="{{ __("Loading, please wait...") }}">
+                    {{ __("Proceed to checkout") }}
+                </button>
+                <p class="mb-0 text-center mt-3 text-gray-400"><small>{{ __("You will be redirected to Tebex Checkout to complete your purchase") }}</small></p>
+            </form>
+        </div>
+    </div>
+</div>

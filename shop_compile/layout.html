@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>{{ store.name }} | {{ page.title }}</title>
+
+    <link rel="shortcut icon" href="{{ store.favicon }}">
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+
+        _gaq.push(['_setAccount', 'UA-36735942-3']);
+        _gaq.push(['_trackPageview']);
+
+        {% if store.googleAnalytics %}
+        _gaq.push(['b._setAccount', '{{ store.googleAnalytics }}']);
+        _gaq.push(['b._trackPageview']);
+        {% endif %}
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') +
+                '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+
+    <!-- Tailwind CSS -->
+    <link href="https://bloody-ark.com/css/app.css" rel="stylesheet">
+    
+    <!-- Alpine JS -->
+    <script src="//unpkg.com/alpinejs" defer></script>
+
+    <!-- FontAwesome -->
+    <script data-n-head="ssr" src="https://kit.fontawesome.com/c7397f6fff.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-bgray-bg text-gray-100">
+    
+        {% include "header_1.html" %}
+        
+          <!-- HEADER -->
+
+          <div class="mt-16" style="background: url(https://bloody-ark.com/auth2.jpg); background-position: center; background-repeat: no-repeat; background-size: cover;">
+            <div class="w-full h-full bg-bgray-bg bg-opacity-80">
+                <div class="flex h-full px-3 py-4 sm:p-10 md:p-0">
+                    <div class="my-auto flex justify-center w-full">
+                        <div>
+                            <div class="container flex flex-col items-center py-12 sm:py-12">
+                                <div class="w-full mt-5 justify-center items-center flex-col mb-5 sm:mb-10">
+                                    <h1 class="text-4xl lg:text-5xl xl:text-6xl text-center text-gray-50 font-black leading-7 md:leading-10">
+                                        <img src="https://dunb17ur4ymx4.cloudfront.net/webstore/logos/f204b7e505ea1dfc75bb71150dcbdc15f94dd745.png">
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <main class="mt-20 px-6 mb-20">
+            <div class="mt-4 w-full flex gap-4">
+                <div class="bg-white dark:bg-bgray-secondary shadow rounded-lg w-[400px] hidden lg:block" style="width:400px;">
+                   {% include "sidebarnavigation.twig" %}
+                </div>
+                <div class="w-full">
+                        {% block content %}
+                        {% endblock %}
+                    
+                </div>
+            </div>
+        </main>
+        
+
+        <footer class="py-3 text-white position-relative zindex-10 w-full">
+            <div class="w-full">
+                <div class="row no-gutters align-items-center w-full">
+                    <div class="col-12 col-md-6 text-center text-md-left mb-4 mb-md-0 small w-full">
+                        <span>&copy; {{ __("Copyright") }} {{ "now"|date("Y") }} <strong>{{ store.name }}</strong></span>
+
+                        <span class="branding"> |
+                            <!-- Do not remove the Buycraft branding if you are not on the Ultimate Plan. Your account will be deleted. -->
+                            {{ __("Powered by") }} <a href="https://www.tebex.io/" target="_blank" class="font-weight-bold text-white">Tebex</a>
+                            {% if store.useCheckout %}
+                                <br /><a href="/terms/checkout">Terms</a> | <a href="/terms/privacy">Privacy</a> | <a href="/terms/impressum">Impressum</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Basket Modal -->
+        {% if basket.packages|length > 0 %}
+            <div class="modal fade hidden" id="basketModal" tabindex="-1" role="dialog" aria-labelledby="basketModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">{{ __("Your Basket") }}</h4>
+                            <button type="button" class="btn btn-link p-0" data-dismiss="modal" aria-hidden="true">
+                                <i class="fas fa-times text-dark"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped rounded border mb-0">
+                                    <tbody>
+                                    {% for package in basket.packages %}
+                                        <tr>
+                                            <td><small>{{ package.name[:25] }}</small></td>
+                                            <td><small>{{ package.price|money }} {{ basket.currency }}</small></td>
+                                            <td class="text-right">
+                                                <a href="/checkout/item/remove/{{ package.item_id }}" class="btn-sm btn btn-outline-danger">
+                                                    <i class="fas fa-fw fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row align-items-center mt-4">
+                                <div class="col-6">
+                                    <span class="text-uppercase font-weight-medium">{{ __("Total") }}: {{ basket.price|money }} <small>{{ basket.currency }}</small></span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <a class="btn btn-primary btn-sm px-3" href="/checkout/basket">
+                                        {{__("Checkout") }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- End Basket Modal -->
+        <div class="modal fade remote-modal" tabindex="-1" role="dialog" aria-labelledby="popup-modal" aria-hidden="true"  id="popup-modal"></div>
+    </div>
+
+
+    {% if page.category == "checkout" %}
+        <script src="https://js.stripe.com/v2/"></script>
+    {% endif %}
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
+
+    <script src="/templates/209/js/skin.min.js"></script>
+    <script src="/templates/209/js/site.js"></script>
+    <script>
+        jQuery(function () {
+            var countdowns = $(".countdown-to");
+            countdowns.each(function () {
+                setInterval(function (ele) {
+                    timeLeft = parseInt(ele.attr("data-countdown"));
+                    if (timeLeft == 0) {
+                        ele.html("Time Expired!");
+                    } else {
+                        timeLeft--;
+                        ele.attr("data-countdown", timeLeft);
+                        var days = Math.floor(timeLeft / (60 * 60 * 24));
+                        var hours = Math.floor((timeLeft % (60 * 60 * 24)) / (60 * 60));
+                        var minutes = Math.floor((timeLeft % (60 * 60)) / (60));
+                        var seconds = Math.floor((timeLeft % 60));
+                        ele.html(days + "d " + hours + "h " + minutes + "m " + seconds + "s");
+                    }
+                }, 1000, jQuery(this));
+            });
+        });
+    </script>
+    {% if config("server-ip") %}
+        <script type="text/javascript" src="{{ asset('clipboard.js') }}"></script>
+        <script>
+            var serverClipboard = new ClipboardJS('#server-ip-cp');
+            serverClipboard.on('success', function(e) {
+                $('#server-ip-cp').text('copied!');
+                e.clearSelection();
+            });
+        </script>
+    {% endif %}
+</body>
+</html>

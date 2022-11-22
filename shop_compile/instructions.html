@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <div class="p-4">
+        <h1 class="mb-3">{{ __("Payment instructions") }}</h1>
+        {{ gateway.note|raw }}
+        {{ gateway.scripts|raw }}
+    </div>
+
+{% endblock %}

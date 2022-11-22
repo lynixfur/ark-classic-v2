@@ -1,0 +1,30 @@
+ <div class="p-5 w-[400px]">
+            <a href="/" class="transition-colors duration-300 flex items-center w-full py-2.5 px-3 mt-2 rounded hover:bg-bgray-overlay hover:text-gray-300">
+                <i class="fa-solid fa-home m-1 my-auto text-xl text-gray-500"></i>
+                <span class="ml-2 text-md font-bold text-gray-400">{{ __("Home") }}</span>
+            </a>
+            {% for category in store.categories %}
+                {% if category.subcategories|length > 0 %}
+                    <a href="#{{ category.id }}-nav" data-parent="#accordionNav" data-toggle="collapse" class="transition-colors duration-300 flex items-center w-full py-2.5 px-3 mt-2 rounded hover:bg-bgray-overlay hover:text-gray-300">
+                        <span class="ml-2 text-md font-bold text-gray-400">{{ category.name }}</span>
+                    </a>
+                    <div class="collapse" id="{{ category.id }}-nav">
+                        <ul class="list-group mb-1">
+                            {% for subcategory in category.subcategories %}
+                                <a class="list-group-item bg-primary-800 border border-primary-700 text-primary-200 mb-1 font-weight-normal rounded-sm nav-child" href="/category/{{ subcategory.id }}">{{ subcategory.name }}</a>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% else %}
+                    <a href="/category/{{ category.id }}" class="transition-colors duration-300 flex items-center w-full py-2.5 px-3 mt-2 rounded hover:bg-bgray-overlay hover:text-gray-300">
+                        <span class="ml-2 text-md font-bold text-gray-400">{{ category.name }}</span>
+                    </a>
+                {% endif %}
+            {% endfor %}
+
+            {% for page in store.pages %}
+            <a href="/{{ page.slug }}" class="list-group-item bg-primary-800 border border-primary-700 text-primary-200 mb-1 font-weight-normal rounded-sm">{{ page.title }}</a>
+            {% endfor %}
+            
+                                {{ modules|raw }}
+</div>

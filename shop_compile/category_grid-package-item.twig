@@ -1,0 +1,67 @@
+    <div class="bg-white dark:bg-bgray-secondary shadow rounded-lg p-6">
+        <a href="/package/{{ package.id }}" class="bg-white text-center d-block position-relative card-img-top package-image {% if package.countdownEnds %} ending-soon {% endif %}">
+            {% if package.image.uploaded %}
+                <img src="{{ package.image.url }}" class="img-fluid w-auto mx-auto position-relative card-img-top toggle-tooltip" title="{{ __("Click for more details") }}" />
+            {% else %}
+                <div class="d-flex bg-white text-center rounded align-items-center justify-content-center toggle-tooltip" title="{{ __("Click for more details") }}" style="min-height: 236px">
+                    <i class="fa-fw fas fa-image text-primary fa-2x"></i>
+                </div>
+            {% endif %}
+            {% if package.countdownEnds %}
+                <div class="position-absolute text-center w-100"  style="top:-1rem; left:0;">
+                    <div class="badge badge-danger font-weight-normal text-white">{{ __("Expires in:") }} <span class="countdown-to ml-2" data-countdown="{{ package.countdownEnds }}"></span></div>
+                </div>
+            {% endif %}
+        </a>
+        <div class="card-body border-top">
+            <h4 class="mb-2 h4 mt-3">
+                <a href="/package/{{ package.id }}" class="text-gray-50 font-bold text-xl">{{ package.name[:20] }}</a>
+            </h4>
+            <div class="d-flex align-items-center">
+                {% if package.customPrice %}
+                    <div class="d-flex">
+                        <span class="lead text-primary font-weight-bold font-weight-bold text-gray-300">{{ __("You decide") }}</span>
+                    </div>
+                {% elseif package.price == 0.00 %}
+                    <div class="d-flex">
+                        <span class="lead text-primary font-weight-bold font-weight-bold text-gray-300">{{ __("Free") }}</span>
+                    </div>
+                {% else %}
+                    {% if package.discount.applied %}
+                        <div class="d-flex font-weight-bold text-gray-300">
+                            <del class="text-muted small mr-3 font-weight-bold text-gray-300">
+                                {{ package.discount.original|money }} {{ basket.currency }}
+                            </del>
+                        </div>
+                    {% endif %}
+                    <div class="d-flex">
+                        <span class="lead text-primary font-weight-bold text-gray-300">{{ package.price|money }} {{ basket.currency }}</span>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+        <div class="card-footer p-0">
+            {% if package.basket %}
+                <a href="/checkout/item/remove/{{ package.item_id }}" class="mt-3 text-white bg-bred-2 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-bold inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center">
+                    
+                 <i class="fa-solid fa-times mr-2"></i>   {{__("Remove") }}</a>
+            {% else %}
+                {% if package.type == 'both' %}
+                    <a class="mt-3 text-white bg-bred-2 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-bold inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center" href="/package/{{ package.id }}" role="button">
+                        {{__("View") }}
+                    </a>
+                {% else %}
+                        {% if package.type == 'subscription' %}
+                            <a class="mt-3 text-white bg-bred-2 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-bold inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center" href="/checkout/packages/add/{{ package.id }}/subscribe" role="button">
+                                {{__("Subscribe") }}
+                            </a>
+                        {% else %}
+                            <a class="mt-3 text-white bg-bred-2 hover:bg-red-700 focus:ring-4 focus:ring-cyan-200 font-bold inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center" href="/checkout/packages/add/{{ package.id }}" role="button">
+                                <i class="fa-solid fa-basket-shopping mr-2"></i> {{__("Add to Basket") }}
+                            </a>
+                        {% endif %}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>

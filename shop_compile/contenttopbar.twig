@@ -1,0 +1,77 @@
+<nav class="dark:bg-bgray-secondary w-full rounded-lg px-4">
+      <div class="relative flex items-center justify-between h-16">
+        <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+          <div class="flex-shrink-0 flex items-center place-content-center">
+            <div class="hidden lg:flex w-auto my-auto">
+                 
+                   <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
+    <div @click="open = ! open">
+<a class="text-gray-300 hover:text-gray-500 transition-colors block px-3 py-2 rounded-md text-base font-medium my-1"><img class="mr-1 my-auto" src="{{ asset(store.locale ~ '.png') }}" alt="{{store.locale}}" /></a>
+    </div>
+
+    <div x-show="open"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="transform opacity-0 scale-95"
+            x-transition:enter-end="transform opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-75"
+            x-transition:leave-start="transform opacity-100 scale-100"
+            x-transition:leave-end="transform opacity-0 scale-95"
+            class="absolute z-50 mt-2 w-48 rounded-md shadow-lg origin-top-left left-0"
+            style="display: none;"
+            @click="open = false">
+        <div class="rounded-md ring-1 ring-black ring-opacity-5 bg-bgray-overlay">
+                            {% for locale, name in store.locales %}
+                                <a class="block px-4 py-2 text-sm leading-5 text-gray-200 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out flex" href="?locale={{ locale }}"><img class="mr-2 h-4 w-4" src="{{ asset(locale ~ '.png') }}" alt="{{ locale }} Flag" /> {{ name }} </a>
+                            {% endfor %}
+        </div>
+    </div>
+</div>
+  
+  <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
+    <div @click="open = ! open">
+        <button class="text-gray-300 hover:text-gray-500 transition-colors block px-3 py-2 rounded-md text-base font-medium"><i class="fa-solid fa-money-bill-1-wave mr-1"></i>                         {{ basket.currency }}</button>
+    </div>
+
+    <div x-show="open"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="transform opacity-0 scale-95"
+            x-transition:enter-end="transform opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-75"
+            x-transition:leave-start="transform opacity-100 scale-100"
+            x-transition:leave-end="transform opacity-0 scale-95"
+            class="absolute z-50 mt-2 w-48 rounded-md shadow-lg origin-top-left left-0"
+            style="display: none;"
+            @click="open = false">
+        <div class="rounded-md ring-1 ring-black ring-opacity-5 bg-bgray-overlay">
+                                    {% for currency in store.currencies %}
+                            {% if currency.code in [store.currency, "AUD", "BRL", "CAD", "DKK", "EUR", "NOK", "NZD", "GBP", "SEK", "USD", "PLN"] %}
+                                <a class="block px-4 py-2 text-sm leading-5 text-gray-200 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out {% if basket.currency==currency.code %} bg-gray-700 {% endif %}" href="?currency={{ currency.code }}">{{ currency.code }}</a>
+                            {% endif %}
+                        {% endfor %}
+        </div>
+    </div>
+</div>
+   
+  
+            </div>
+          </div>
+        </div>
+        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <!-- Profile dropdown -->
+          <div class="ml-3 relative">
+            
+
+            <div>
+              <a href="/checkout/basket" class="inline-flex items-center px-3 py-1 font-bold leading-6 text-md shadow rounded-full text-gray-100 bg-bred-2 transition ease-in-out duration-150">  <i class="fa-solid fa-basket-shopping m-1 mr-2 my-auto text-gray-100"></i>
+              
+                                          {{ _p(":count item for :amount :currency", basket.packages|length, {'count' :
+                                basket.packages|length, 'amount' : basket.price|money, 'currency' : basket.currency})
+                            }}
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>

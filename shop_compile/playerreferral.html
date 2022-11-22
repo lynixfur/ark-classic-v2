@@ -1,0 +1,19 @@
+<div class="card">
+    <div class="card-header">
+        <h5>{{ __("Player Referrals") }}</h5>
+    </div>
+    <div class="card-body">
+        <a class="referral-button text-white btn btn-secondary btn-block d-block" data-toggle="collapse" href="#collapseReferral" role="button" aria-expanded="false" aria-controls="collapseReferral">Did someone refer you?</a>
+        <div class="p-4 border bg-light rounded collapse" id="collapseReferral">
+            <p>{{ __("Please enter the username or ID of the player that referred you in the text field below.") }}</p>
+            <div class="input-group mt-3 mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i id="preferral-icon" class="fas fa-user"></i></span>
+                </div>
+                <input type="text" class="form-control" id="preferral-username" name="username" placeholder="{{ __("Enter the ID of the player") }}" value="{{ username_id }}" />
+            </div>
+            <div class="bg-warning">{{ minSpend > 0 ? "The player must have spent more than " ~ minSpend ~ " " ~ basket.currency ~ " before they're eligble for referral rewards."}}</div>
+            <div id="preferral-message"></div>
+        </div>
+    </div>
+</div>

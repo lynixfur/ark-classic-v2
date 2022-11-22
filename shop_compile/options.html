@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <div class="p-4 ">
+        
+            {% include "contenttopbar.twig" %}
+
+    <div class="p-4 ">
+        <h1 class="mb-4 text-gray-300 text-5xl">{{ options.package.name }}</h1>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="text-gray-300 text-2xl">{{ __("Enter package options") }}:</h5>
+            </div>
+            <form method="post">
+                <div class="variables">
+                    <div class="card-body">
+                        {% if options.package.chooseServer %}
+                            <div class="form-group">
+                                <label class="text-gray-300">{{ __("Please choose which server to receive this package upon") }}</label><br><br>
+                                <select class="bg-bgray-secondary border-700 rounded text-gray-200 w-full sm:w-auto" name="server">
+                                    <option value="">{{ __("Please choose which server to receive this package upon") }}</option>
+                                    {% for server in options.servers %}
+                                        <option value="{{ server.id }}">{{ server.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+
+                        {% if options.package.customPrice %}
+                            <div class="form-group">
+                                <label>{{ __("Please enter the amount you'd like to pay.") }}</label>
+                                <div class="input-group">
+                                    <input type="text" name="price" class="bg-gray-700 rounded-lg" placeholder="{{ __("Please enter the amount you'd like to pay.") }}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">{{ store.currency }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% for variable in options.variables %}
+                            {% if variable.type == "dropdown" %}
+                                <div class="form-group mb-4">
+                                    <label>{{ variable.description }}</label>
+                                    <select name="variables[{{ variable.id }}]" class="form-control input-lg">
+                                        <option value="">{{ variable.description }}</option>
+                                        {% for option in variable.options %}
+                                            <option value="{{ option.id }}">
+                                                {{ option.name }}
+                                                {% if option.price > 0 %}
+                                                    (+{{ option.price|money }} {{ basket.currency }})
+                                                {% endif %}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            {% elseif variable.id == "discord_id" %}
+                                <p>{{ variable.description }}</p>
+
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-lg" readonly disabled value="{{ variable.value ? "Logged in as " ~ variable.discord_tag : "Not logged in" }}">
+                                    <span class="input-group-append">
+                                          <a href="https://ident.tebex.io/discord/?return={{ url(['fivem_id']) }}" id="login-with-discord" class="btn btn-dark">{{ __("Login with") }} Discord</a>
+                                      </span>
+                                </div>
+
+                                <input type="hidden" name="variables[{{ variable.id }}]" value="{{ variable.value }}" />
+                                <br />
+                            {% else %}
+                                <div class="form-group mb-4">
+                                    <label>{{ variable.description }}</label>
+                                    <input type="text" name="variables[{{ variable.id }}]" class="form-control input-lg"
+                                           placeholder="{{ variable.description }}" />
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="mt-5">
+                    <div class="flex gap-3">
+                        <div class="">
+                            <a href="/category/{{ options.package.category }}" class="inline-flex items-center px-4 py-2 font-bold leading-6 text-md shadow rounded text-gray-100 bg-bgray-overlay transition ease-in-out duration-150">{{
+                                __("Back") }}</a>
+                        </div>
+                        <div class="">
+                            <input type="submit" value="{{ __("Continue") }}" name="submit" class="inline-flex items-center px-4 py-2 font-bold leading-6 text-md shadow rounded text-gray-100 bg-bred-2 transition ease-in-out duration-150" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+{% endblock %}

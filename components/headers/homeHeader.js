@@ -4,7 +4,7 @@ export default function HomeHeader({text, players}) {
       className="h-full"
       style={{
         background:
-          "url(/images/arkclassicwebbanner.jpg)",
+          "url(/images/classicbg.jpg)",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",

@@ -16,7 +16,7 @@
     "@mui/icons-material": "^5.4.1",
     "@mui/lab": "^5.0.0-alpha.68",
     "@mui/material": "^5.4.1",
-    "@next/mdx": "^12.1.6",
+    "@next/mdx": "^12.3.4",
     "@passport-next/passport-openid": "^1.0.0",
     "@prisma/client": "^3.15.2",
     "@sendgrid/mail": "^7.4.7",
